@@ -2,8 +2,8 @@ import json
 import base64
 import onnxruntime
 import numpy as np
-import cv2
-from collections import namedtuple
+from PIL import Image
+from io import BytesIO
 
 
 def respond(success, vector=None, reason=None):
@@ -45,9 +45,7 @@ def run_model(model_path, img):
     return outputs
 
 def decode_base64(data):
-    img = base64.b64decode(data)
-    img = cv2.imdecode(np.fromstring(img, np.uint8), cv2.IMREAD_COLOR)
-    img = cv2.resize(img, (224, 224))
+    img = np.asarray(Image.open(BytesIO(base64.b64decode(data))))[:, :, [2, 1, 0]]
     img = img.transpose((2,0,1))
     img = img.reshape(1, 3, 224, 224)
     return img
