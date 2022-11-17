@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "ONNX-TrafficLightApp"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-7b4id1xqt28h"
+s3_prefix = "ONNX-TrafficLightApp"
+region = "ap-south-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+image_repositories = ["ONNXTrafficLightDetectFunctionContainerBasedTest=235319806087.dkr.ecr.ap-south-1.amazonaws.com/onnxtrafficlightappdcadfc64/onnxtrafficlightdetectfunctioncontainerbasedtestc08fb65frepo"]

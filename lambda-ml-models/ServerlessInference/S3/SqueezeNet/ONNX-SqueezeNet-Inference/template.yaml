@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'ONNX-SqueezeNet-Inference
+
+  Sample SAM Template for ONNX-SqueezeNet-Inference
+
+  '
+Globals:
+  Function:
+    Timeout: 300
+    Tracing: Active
+  Api:
+    TracingEnabled: true
+Resources:
+  ONNXSqueezeNetFunctionS3BasedTest:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://aws-sam-cli-managed-default-samclisourcebucket-7b4id1xqt28h/08e440e0348ff0dc66ab23108a045f35
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Architectures:
+      - x86_64
+      Events:
+        Inference:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+    Metadata:
+      SamResourceId: ONNXSqueezeNetFunctionS3BasedTest
+Outputs:
+  ONNXSqueezeNetFunctionS3BasedTestApi:
+    Description: API Gateway endpoint URL for Prod stage for ONNXSqueezeNetFunction
+      function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+  ONNXSqueezeNetFunctionS3BasedTest:
+    Description: ONNXSqueezeNetFunction Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - ONNXSqueezeNetFunctionS3BasedTest
+      - Arn
+  ONNXSqueezeNetFunctionS3BasedTestIamRole:
+    Description: Implicit IAM Role created for ONNXSqueezeNetFunction function
+    Value:
+      Fn::GetAtt:
+      - ONNXSqueezeNetFunctionS3BasedTestRole
+      - Arn
